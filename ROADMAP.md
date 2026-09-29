@@ -1,0 +1,8 @@
+# Roadmap
+
+- [ ] 增加正式课程包签名与来源校验
+- [ ] 增加 Widget，需要 App Group 和正式签名能力
+- [ ] 增加 CloudKit 跨网络同步的正式 Entitlement 配置
+- [ ] 增加更多真实设备端到端测试
+- [ ] 增加性能趋势存储和崩溃日志导出
+- [ ] 完成 Developer ID、公证、TestFlight 或 App Store 发布

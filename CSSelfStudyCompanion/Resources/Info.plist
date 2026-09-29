@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.example.CSXuexi</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>csxuexi</string>
+			</array>
+		</dict>
+	</array>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_cs-self-sync._tcp</string>
+		<string>_cs-self-sync._udp</string>
+	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>用于在 Mac 和 iPhone 之间同步学习数据</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>com.example.CSXuexi.tutorial</string>
+	</array>
+</dict>
+</plist>

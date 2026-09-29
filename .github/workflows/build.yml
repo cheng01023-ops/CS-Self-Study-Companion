@@ -1,0 +1,19 @@
+name: Build and Test
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  macos:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: xcodebuild -version
+      - run: xcodebuild -project CSSelfStudyCompanion.xcodeproj -scheme CSSelfStudyCompanion-MacTests -destination 'platform=macOS' test
+  ios-build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: xcodebuild -project CSSelfStudyCompanion.xcodeproj -scheme CSSelfStudyCompanion -configuration Debug -destination 'generic/platform=iOS' CODE_SIGNING_ALLOWED=NO build
