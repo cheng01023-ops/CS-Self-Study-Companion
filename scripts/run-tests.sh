@@ -3,7 +3,7 @@ set -euo pipefail
 source "$(dirname "$0")/common.sh"
 LOG_DIR="$PROJECT_ROOT/build/test-results-$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$LOG_DIR"
-xcodebuild -project "$PROJECT" -scheme CSSelfStudyCompanion-MacTests -destination 'platform=macOS' -enableCodeCoverage YES test | tee "$LOG_DIR/macos.log"
+xcodebuild -project "$PROJECT" -scheme CSSelfStudyCompanion-MacTests -destination 'platform=macOS' -enableCodeCoverage YES CODE_SIGNING_ALLOWED=NO test | tee "$LOG_DIR/macos.log"
 SIMULATOR_ID=$(xcrun simctl list devices available --json | python3 -c '
 import json,sys
 data=json.load(sys.stdin); items=[]

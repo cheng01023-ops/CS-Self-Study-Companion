@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: xcodebuild -version
-      - run: xcodebuild -project CSSelfStudyCompanion.xcodeproj -scheme CSSelfStudyCompanion-MacTests -destination 'platform=macOS' test
+      - run: xcodebuild -project CSSelfStudyCompanion.xcodeproj -scheme CSSelfStudyCompanion-MacTests -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO test
   ios-build:
     runs-on: macos-15
     steps:
