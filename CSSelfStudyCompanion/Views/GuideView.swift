@@ -99,7 +99,11 @@ struct GuideView: View {
                 .font(.title3.bold())
             FAQRow(question: "不知道从哪里开始？", answer: "回到首页，点击“今日建议”。它会优先安排到期复习、薄弱概念或下一阶段。")
             FAQRow(question: "教程太长怎么办？", answer: "在教程页切换“快速 / 标准 / 深度”。快速模式只保留核心理解和基础实验，深度模式再展开全部内容。")
+            FAQRow(question: "可验证实验课怎么完成？", answer: "按“目标、预测、准备、执行、验证、复盘”六步前进。执行阶段保存原始输出和退出码，验证阶段逐条勾选验收清单，复盘阶段写根因和收获；未通过时可以一键加入复习。")
             FAQRow(question: "代码运行失败？", answer: "先看标准错误，从第一条错误开始修复。macOS 会直接编译运行；iPhone 会连接同一局域网内正在运行的 Mac，由 Mac 在沙盒中编译并把输出返回手机。")
+            FAQRow(question: "项目太多不知道怎么选？", answer: "打开“项目作品集”，先按轨道筛选，再使用“推荐下一项工程”。推荐项会按工程阶梯顺序选择第一个尚未验收的项目。若前置条件未满足，先回到对应阶段教程。")
+            FAQRow(question: "数学和计算理论怎么学？", answer: "阶段 4 先学集合、证明、线性代数、概率和信息论；阶段 5 再进入自动机、可计算性、复杂度、算法范式和程序语义。每个教程都可以运行代码、完成练习，并配套逻辑真值表、自动机、概率实验和复杂度增长互动实验室。")
+            FAQRow(question: "开源源码看不懂？", answer: "不要直接从仓库第一行开始。进入“代码阅读训练 → 开源阅读阶梯”，从 L0 单文件入口开始，按仓库地图、入口、追踪任务、证据和复盘六步推进，并记录阅读日期，因为仓库会持续变化。")
             FAQRow(question: "答错了怎么办？", answer: "选择题会自动进入错题本，并按 1、3、7、30 天安排复习。编程题可以手动加入错题本。")
             FAQRow(question: "换设备后数据怎么办？", answer: "优先让 Mac 和 iPhone 连接同一 Wi-Fi 自动增量同步；也可以使用“数据与备份”导出普通或 AES-GCM 加密备份。App 升级会使用版本化 SwiftData Schema 自动迁移。")
         }
@@ -194,10 +198,11 @@ private enum GuideContent {
             icon: "point.topleft.down.to.point.bottomright.curvepath",
             tint: .indigo,
             items: [
-                GuideItem(title: "阶段顺序", detail: "阶段 0 到 10 按基础依赖排序。建议完成当前阶段的必修内容，再进入下一阶段。"),
+                GuideItem(title: "阶段顺序", detail: "阶段 0 到 12 按基础依赖排序：数学与计算理论位于 Linux 之后、数据结构与系统课程之前。建议完成当前阶段的必修内容，再进入下一阶段。"),
                 GuideItem(title: "今日建议", detail: "首页会优先推荐到期复习、掌握度较低的概念，以及下一个未完成阶段。"),
                 GuideItem(title: "今日三步计划", detail: "系统根据复习、薄弱概念和下一课自动生成约 60 分钟的三步任务。"),
-                GuideItem(title: "阶段卡片", detail: "卡片显示主题数量、预计时间和完成百分比，点击进入阶段详情。")
+                GuideItem(title: "阶段卡片", detail: "卡片显示主题数量、预计时间和完成百分比，点击进入阶段详情。"),
+                GuideItem(title: "数学与理论主线", detail: "阶段 4 覆盖离散数学、证明、线性代数、概率和信息论；阶段 5 覆盖自动机、可计算性、复杂度、算法范式和程序语义。两条阶段会自动进入教程、实验、练习和复习闭环。")
             ]
         ),
         GuideSection(
@@ -206,6 +211,7 @@ private enum GuideContent {
             icon: "book.pages.fill",
             tint: .blue,
             items: [
+                GuideItem(title: "可验证实验课", detail: "每篇教程顶部都有六步实验：目标、预测、准备、执行、验证、复盘。实验证据会持久化保存，验收清单和复习状态随学习数据同步。"),
                 GuideItem(title: "学习模式", detail: "快速模式只看核心理解与基础实验；标准模式覆盖实践、工程和巩固；深度模式展开全部大师挑战。"),
                 GuideItem(title: "阶段导航", detail: "教程分为开始、理解、实践、进阶、巩固、强化、融会、大师八个阶段。"),
                 GuideItem(title: "教回去", detail: "在阅读正文前按“结论—原因—例子—边界”讲清楚。系统会从概念覆盖、因果、例子、结构和完整程度五个维度评估，并保存反馈。"),
@@ -247,9 +253,11 @@ private enum GuideContent {
             icon: "doc.text.magnifyingglass",
             tint: .teal,
             items: [
-                GuideItem(title: "进入入口", detail: "首页工具栏的“代码阅读”提供 C、Shell、SQL、网络、并发和算法题目。"),
-                GuideItem(title: "训练方式", detail: "先阅读代码、预测输出、定位错误，再选择答案并查看解释。"),
-                GuideItem(title: "错题复习", detail: "回答错误会自动加入复习计划，并记录到概念掌握度。")
+                GuideItem(title: "进入入口", detail: "首页的“代码阅读”同时提供短代码推理题和六级开源源码阅读阶梯。"),
+                GuideItem(title: "代码推理题", detail: "先阅读代码、预测输出、定位错误，再选择答案并查看解释；错误题目会自动进入复习。"),
+                GuideItem(title: "开源阅读阶梯", detail: "从 coreutils 单文件入口，逐步进入 Git、curl、Redis、SQLite、Nginx、Linux、LLVM 和 Swift 等真实仓库。"),
+                GuideItem(title: "六步阅读法", detail: "每条路线按目标、仓库地图、入口路径、追踪任务、证据和复盘推进，并要求保存源码位置、调用链和真实输出。"),
+                GuideItem(title: "错题复习", detail: "完成不充分或需要巩固的阅读任务可以加入复习，下一次重新说明调用链和证据。")
             ]
         ),
         GuideSection(
@@ -282,10 +290,11 @@ private enum GuideContent {
             icon: "shippingbox.fill",
             tint: .green,
             items: [
-                GuideItem(title: "项目制课程", detail: "每个项目包含目标、技术标签、里程碑、交付物和结业验收。"),
-                GuideItem(title: "完成方式", detail: "从命令行工具开始，每一阶段都要运行、测试、复盘，再进入下一个里程碑。"),
-                GuideItem(title: "互动实验室", detail: "位运算、内存布局、TCP 握手和哈希碰撞可以通过操作观察原理，不要只看结论。"),
-                GuideItem(title: "项目作品集", detail: "项目预览页可以打开作品集，查看里程碑完成度、交付物和验收状态，并导出 Markdown 报告。")
+                GuideItem(title: "工程阶梯", detail: "项目按 C/Linux、系统并发、网络服务、数据存储、编译器和 Apple 平台六条轨道排列，从 CLI 工具逐步进入服务器和存储引擎。"),
+                GuideItem(title: "工程档案", detail: "每个项目都有预计工时、前置条件、仓库地图、分阶段里程碑、质量门禁、发布清单和配套开源阅读。"),
+                GuideItem(title: "开始项目", detail: "先复制 README 草案建立仓库骨架，再逐项完成阶段；每个里程碑可以单独写工程证据，通过标准需要源码、测试或运行结果支持。"),
+                GuideItem(title: "项目作品集", detail: "作品集按轨道展示推荐下一项工程、项目完成度、质量门禁和 Markdown 导出报告。"),
+                GuideItem(title: "互动实验室", detail: "位运算、内存布局、TCP 握手和哈希碰撞可以通过操作观察原理，不要只看结论。")
             ]
         ),
         GuideSection(

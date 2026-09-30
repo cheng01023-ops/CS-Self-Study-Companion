@@ -105,4 +105,12 @@ extension String {
     static func resourceNoteTargetID(_ resourceID: String) -> String {
         "resource:\(resourceID):note"
     }
+
+    static func tutorialLabStageProgressID(_ tutorialID: String, stage: Int) -> String {
+        TutorialLabCatalog.stageProgressID(tutorialID, stage: stage)
+    }
+
+    static func tutorialLabCheckpointProgressID(_ tutorialID: String, checkpointID: String) -> String {
+        TutorialLabCatalog.checkpointProgressID(tutorialID, checkpointID: checkpointID)
+    }
 }

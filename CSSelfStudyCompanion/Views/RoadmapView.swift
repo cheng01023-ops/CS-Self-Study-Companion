@@ -295,7 +295,7 @@ struct RoadmapView: View {
                 quickStat(icon: "list.number", title: "分步教程", detail: "40+ 章节", tint: .indigo)
                 quickStat(icon: "chevron.left.forwardslash.chevron.right", title: "C 与 Swift", detail: "运行验证", tint: .purple)
                 NavigationLink(value: AppRoute.codeReading) {
-                    quickStat(icon: "doc.text.magnifyingglass", title: "代码阅读", detail: "找错与预测", tint: .teal)
+                    quickStat(icon: "doc.text.magnifyingglass", title: "代码阅读", detail: "\(OpenSourceReadingCatalog.missions.count) 条路线", tint: .teal)
                 }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("quick-code-reading")
@@ -337,7 +337,8 @@ struct RoadmapView: View {
                         .font(.caption.weight(.semibold))
                 }
                 .buttonStyle(.plain)
-                Text("\(ProjectCatalog.projects.count) 个项目")
+                .accessibilityIdentifier("project-portfolio-link")
+                Text("\(ProjectCatalog.projects.count) 项工程 · \(ProjectTrack.allCases.count) 轨道")
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(.secondary)
             }
@@ -358,9 +359,10 @@ struct RoadmapView: View {
                                     .foregroundStyle(.secondary)
                                     .lineLimit(3)
                                 Spacer()
-                                Text(project.level)
+                                Text("\(project.track.title) · \(project.level) · \(project.estimatedHours)h")
                                     .font(.caption.weight(.bold))
                                     .foregroundStyle(Color(hex: project.themeHex))
+                                    .lineLimit(1)
                             }
                             .padding(15)
                             .frame(width: 205, height: 172, alignment: .leading)
@@ -415,6 +417,7 @@ struct RoadmapView: View {
                             }
                         }
                         .buttonStyle(.plain)
+                        .accessibilityIdentifier("lab-\(lab.id)")
                     }
                 }
             }

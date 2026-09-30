@@ -12,6 +12,10 @@ enum LearningCatalog {
             topics: CatalogLinuxBasics.topics + CatalogLinuxAdvanced.topics
         )
 
-        return CatalogFoundation.stages + [linuxStage] + CatalogSystems.stages + CatalogAdvanced.stages
+        return CatalogFoundation.stages
+            + [linuxStage]
+            + CatalogTheory.stages
+            + CatalogSystems.stages
+            + CatalogAdvanced.stages
     }()
 }

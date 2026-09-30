@@ -27,7 +27,15 @@ enum TutorialContentComposer {
             language: tutorial.codeLanguage
         )
 
-        return ([tutorial.markdown, tutorial.commonMistakes.isEmpty ? "" : "# 常见错误原始清单\n\n" + tutorial.commonMistakes]
+        let verifiableLab = TutorialLabCatalog.markdownSection(
+            tutorialID: tutorial.id,
+            title: tutorial.title,
+            summary: tutorial.summary,
+            codeLanguage: tutorial.codeLanguage,
+            code: tutorial.code
+        )
+
+        return ([tutorial.markdown, verifiableLab, tutorial.commonMistakes.isEmpty ? "" : "# 常见错误原始清单\n\n" + tutorial.commonMistakes]
             + chapters(context)
             + masteryChapters)
             .filter { !$0.isEmpty }

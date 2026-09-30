@@ -106,6 +106,7 @@
 		D4A6679D0BB83A5FB553AC00 /* CloudSyncServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72C435EEDE87A6D86E46E97 /* CloudSyncServiceTests.swift */; };
 		D4D277B0F3147506397839A1 /* CodeExecutionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14120547B22822F53A9A6A6E /* CodeExecutionService.swift */; };
 		D69AA0532DB56257FB8B8CE9 /* ProgressServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195FF92E8264DE59DB2A1654 /* ProgressServiceTests.swift */; };
+		D80A8DD05381F1C8EBE7E894 /* CatalogTheory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D03AE0454CBD76970E6C82 /* CatalogTheory.swift */; };
 		D9314447001614FEDAE9FF32 /* SyncDeltaServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59263DC122E8C8F13A5B7F42 /* SyncDeltaServiceTests.swift */; };
 		D991516E73AB20367F4FAD60 /* DatabaseRecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BE82F240EC0E1027E449F5 /* DatabaseRecoveryView.swift */; };
 		DE999DD751BE446A5784B437 /* ContentVersionHistoryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D14FC117C30A3AEA5D9628C /* ContentVersionHistoryServiceTests.swift */; };
@@ -245,6 +246,7 @@
 		E221D3AC52381181A4042312 /* ConceptCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Content/ConceptCatalog.swift; sourceTree = "<group>"; };
 		E23A718A4DC9E0BD52708418 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Views/GuideView.swift; sourceTree = "<group>"; };
 		E8A22C9D504C2EC7AA8830C2 /* ReviewServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReviewServiceTests.swift; sourceTree = "<group>"; };
+		E9D03AE0454CBD76970E6C82 /* CatalogTheory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CatalogTheory.swift; path = CSSelfStudyCompanion/Content/CatalogTheory.swift; sourceTree = "<group>"; };
 		ECBCE0BB454C74EC7E5C0BDF /* CodeExerciseCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Content/CodeExerciseCatalog.swift; sourceTree = "<group>"; };
 		EDECF40C474DDA2DE951DA30 /* InteractiveLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Views/InteractiveLabView.swift; sourceTree = "<group>"; };
 		EE00CF10E0E3DB7ABB24B329 /* ConceptDependencyCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Content/ConceptDependencyCatalog.swift; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 				0366FB6CE7ACED4348D131DB /* PerformanceDashboardView.swift */,
 				BA1DE23C489CF13CE992B503 /* ReleaseReadinessService.swift */,
 				337CEAF1CC673F42C1518E2B /* ReleaseReadinessView.swift */,
+				E9D03AE0454CBD76970E6C82 /* CatalogTheory.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -732,6 +735,7 @@
 				37DAE9B9F9843AFCDB131BCA /* PerformanceDashboardView.swift in Sources */,
 				008AC2968FB4ACA00CD270CC /* ReleaseReadinessService.swift in Sources */,
 				DFAD79E7F380DC5592EEB749 /* ReleaseReadinessView.swift in Sources */,
+				D80A8DD05381F1C8EBE7E894 /* CatalogTheory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

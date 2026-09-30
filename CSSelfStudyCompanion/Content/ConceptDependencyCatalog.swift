@@ -37,6 +37,23 @@ enum ConceptDependencyCatalog {
         "ast": ["parser"],
         "ir": ["ast", "assembly"],
         "mmap": ["virtual-memory", "file-descriptor"],
-        "epoll": ["file-descriptor", "socket"]
+        "epoll": ["file-descriptor", "socket"],
+        "set": [],
+        "relation": ["set"],
+        "proof": ["relation"],
+        "induction": ["proof"],
+        "vector-space": [],
+        "matrix": ["vector-space"],
+        "probability": ["set"],
+        "expectation": ["probability"],
+        "entropy": ["probability"],
+        "state-machine": ["set"],
+        "regular-language": ["state-machine"],
+        "computability": ["state-machine"],
+        "reduction": ["computability"],
+        "np-complete": ["reduction", "complexity"],
+        "dynamic-programming": ["induction", "complexity"],
+        "invariant": ["proof"],
+        "type-system": ["invariant", "set"]
     ]
 }

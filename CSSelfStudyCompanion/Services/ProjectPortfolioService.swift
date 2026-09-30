@@ -28,6 +28,25 @@ enum ProjectPortfolioService {
         }
     }
 
+    static func recommendedNext(progressRecords: [Progress]) -> ProjectPortfolioItem? {
+        items(progressRecords: progressRecords)
+            .filter { !$0.isCompleted }
+            .sorted {
+                if $0.project.order == $1.project.order { return $0.project.id < $1.project.id }
+                return $0.project.order < $1.project.order
+            }
+            .first
+    }
+
+    static func items(
+        in track: ProjectTrack,
+        progressRecords: [Progress]
+    ) -> [ProjectPortfolioItem] {
+        items(progressRecords: progressRecords)
+            .filter { $0.project.track == track }
+            .sorted { $0.project.order < $1.project.order }
+    }
+
     static func markdown(
         progressRecords: [Progress],
         exportedAt: Date = .now
@@ -52,7 +71,9 @@ enum ProjectPortfolioService {
                 "",
                 item.project.summary,
                 "",
+                "- 工程轨道：\(item.project.track.title)",
                 "- 难度：\(item.project.level)",
+                "- 预计工时：\(item.project.estimatedHours) 小时",
                 "- 技术标签：\(item.project.tags.joined(separator: "、"))",
                 "- 完成度：\(Int(item.progress * 100))%",
                 "- 状态：\(item.isCompleted ? "已验收" : "进行中")",
@@ -66,6 +87,18 @@ enum ProjectPortfolioService {
                 let dateText = record?.completedAt.map { " · \($0.formatted(date: .numeric, time: .omitted))" } ?? ""
                 lines.append("- \(mark) \(milestone.title)：\(milestone.detail)\(dateText)")
             }
+            lines += [
+                "",
+                "### 仓库地图",
+                ""
+            ]
+            lines += item.project.repository.map { "- `\($0.path)`：\($0.purpose)" }
+            lines += [
+                "",
+                "### 质量门禁",
+                ""
+            ]
+            lines += item.project.qualityGates.map { "- [ ] \($0)" }
             lines += [
                 "",
                 "### 交付物",

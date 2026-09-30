@@ -113,7 +113,8 @@ enum StudyPlanService {
         case ..<3: 0
         case 3..<5: 1
         case 5..<7: 2
-        default: 3
+        case 7..<9: 3
+        default: 4
         }
     }
 }

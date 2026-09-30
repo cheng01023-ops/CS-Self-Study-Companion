@@ -55,6 +55,7 @@ struct TutorialDetailView: View {
                                     .id("tutorial-top")
 
                                 header(tutorial)
+                                tutorialLabCard(tutorial)
                                 stepOverview(tutorial: tutorial, steps: steps)
                                 resourceLinks(tutorial)
                                 stepContent(
@@ -136,6 +137,77 @@ struct TutorialDetailView: View {
                 .font(.title3.weight(.medium))
                 .foregroundStyle(.secondary)
                 .lineSpacing(5)
+        }
+        .learningCard()
+    }
+
+    private func tutorialLabCard(_ tutorial: Tutorial) -> some View {
+        let lab = TutorialLabCatalog.blueprint(
+            tutorialID: tutorial.id,
+            title: tutorial.title,
+            summary: tutorial.summary,
+            codeLanguage: tutorial.codeLanguage,
+            code: tutorial.code
+        )
+        let completedStages = TutorialLabStage.allCases.filter { stage in
+            progressRecords.contains {
+                $0.itemID == .tutorialLabStageProgressID(tutorial.id, stage: stage.rawValue) && $0.isCompleted
+            }
+        }.count
+        let completedChecks = lab.checkpoints.filter { checkpoint in
+            progressRecords.contains {
+                $0.itemID == .tutorialLabCheckpointProgressID(tutorial.id, checkpointID: checkpoint.id) && $0.isCompleted
+            }
+        }.count
+        let progress = Double(completedStages) / Double(TutorialLabStage.allCases.count)
+
+        return VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .top, spacing: 12) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 13, style: .continuous)
+                        .fill(.orange.opacity(0.14))
+                    Image(systemName: "testtube.2")
+                        .font(.title2.bold())
+                        .foregroundStyle(.orange)
+                }
+                .frame(width: 48, height: 48)
+
+                VStack(alignment: .leading, spacing: 5) {
+                    HStack {
+                        Text("可验证实验课")
+                            .font(.headline)
+                        Spacer()
+                        Text("\(lab.estimatedMinutes) 分钟")
+                            .font(.caption.monospacedDigit().weight(.semibold))
+                            .foregroundStyle(.secondary)
+                    }
+                    Text(lab.objective)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .lineSpacing(3)
+                }
+            }
+
+            HStack(spacing: 10) {
+                LearningProgressBar(value: progress, tint: .orange)
+                Text("\(completedStages)/6")
+                    .font(.caption.monospacedDigit().bold())
+                    .foregroundStyle(.orange)
+                    .frame(width: 34, alignment: .trailing)
+            }
+
+            HStack(spacing: 8) {
+                StatPill(icon: "scope", text: "目标 · 预测 · 证据")
+                StatPill(icon: "checkmark.shield", text: "\(completedChecks)/\(lab.checkpoints.count) 项验收", tint: .green)
+            }
+
+            NavigationLink(value: AppRoute.tutorialLab(tutorial.id)) {
+                Label(completedStages == 0 ? "开始六步实验" : "继续实验", systemImage: "arrow.right.circle.fill")
+                    .font(.subheadline.weight(.bold))
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.orange)
         }
         .learningCard()
     }
@@ -1066,6 +1138,7 @@ private struct LearningPhase: Identifiable {
     ]
 
     static func phaseID(for title: String) -> Int {
+        if title.hasPrefix("可验证实验课") { return 2 }
         guard title.hasPrefix("深度学习手册 ") else { return 0 }
         let chapterText = title.replacingOccurrences(of: "深度学习手册 ", with: "")
         let number = Int(chapterText.prefix(2)) ?? 0

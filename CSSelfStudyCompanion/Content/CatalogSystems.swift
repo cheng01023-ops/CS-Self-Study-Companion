@@ -4,7 +4,7 @@ enum CatalogSystems {
     static let stages: [LearningStageSeed] = [
         LearningStageSeed(
             id: "stage-4",
-            order: 4,
+            order: 6,
             title: "数据结构与算法",
             subtitle: "用复杂度和不变量选择结构，再用 C 亲手实现。",
             icon: "point.3.connected.trianglepath.dotted",
@@ -205,7 +205,7 @@ Node *reverse_list(Node *head) {
         ),
         LearningStageSeed(
             id: "stage-5",
-            order: 5,
+            order: 7,
             title: "计算机架构与汇编",
             subtitle: "看清 C 代码如何变成寄存器、栈帧和机器指令。",
             icon: "memorychip",
@@ -333,7 +333,7 @@ int main(void) {
         ),
         LearningStageSeed(
             id: "stage-6",
-            order: 6,
+            order: 8,
             title: "操作系统 + Linux 系统编程",
             subtitle: "把进程、线程、内存、文件和内核接口统一起来。",
             icon: "gearshape.2",
@@ -515,7 +515,7 @@ int main(void) {
         ),
         LearningStageSeed(
             id: "stage-7",
-            order: 7,
+            order: 9,
             title: "计算机网络",
             subtitle: "从协议分层走向可运行的 C HTTP 服务器。",
             icon: "network",

@@ -1,18 +1,21 @@
 # CS 自学
 
-面向 Mac 零基础自学者的 iOS 17+ / macOS 14+ 学习 App，覆盖终端、计算机通识、C 语言、Linux、数据结构、系统编程、网络、编译原理、数据库和方向专精。
+面向 Mac 零基础自学者的 iOS 17+ / macOS 14+ 学习 App，覆盖终端、计算机通识、C 语言、Linux、数学与计算理论、数据结构、系统编程、网络、编译原理、数据库和方向专精。
 
 项目使用 SwiftUI、SwiftData 和 XCTest，同一套 Xcode 工程同时构建 iOS 与 macOS 版本。
 
 ## 功能概览
 
-- 11 个学习阶段、19 篇分步教程、练习和外部免费资源
+- 13 个学习阶段、28 篇分步教程、89 条外部免费资源和 52 个概念
+- 每篇教程带六步可验证实验课：目标、预测、准备、执行、验证、复盘
+- 六轨真实工程阶梯：C/Linux、系统并发、网络服务、数据存储、编译语言和 Apple 平台
+- 六级开源代码阅读阶梯：coreutils、jq、Git、curl、Redis、SQLite、Nginx、Linux、LLVM 和 Swift
 - Markdown 教程、代码高亮、收藏和笔记
 - C 代码工作台、测试用例和自动判题
 - iPhone 通过局域网 Mac Companion 远程编译运行代码
 - 错题本、主动回忆、教回去五维评估和 1/3/7/30 天复习
 - 代码阅读、错误定位和输出预测训练
-- 项目制课程、互动实验室和项目作品集
+- 项目制课程、互动实验室、逻辑/自动机/概率/复杂度实验室和项目作品集
 - 全局搜索、命令速查和 Linux 命令参考
 - 进度、掌握度、每日计划和提醒
 - Mac ↔ iPhone 记录级增量同步
@@ -87,9 +90,9 @@ scripts/                         构建、测试、安装和发布脚本
 
 ## 开发状态
 
-- macOS 自动化测试：46 个通过
-- iOS 单元测试：44 个通过
-- iOS UI 测试：2 个通过
+- macOS 自动化测试：55 个通过
+- iOS 单元测试：52 个通过
+- iOS UI 测试：6 个通过
 
 详细内容见 [`docs/USER-GUIDE.md`](docs/USER-GUIDE.md)、[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) 和 [`docs/TEST-REPORT.md`](docs/TEST-REPORT.md)。
 

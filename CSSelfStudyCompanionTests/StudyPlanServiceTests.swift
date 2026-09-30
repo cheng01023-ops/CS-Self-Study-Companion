@@ -51,5 +51,6 @@ final class StudyPlanServiceTests: XCTestCase {
         XCTAssertEqual(StudyPlanService.recommendedStageOrder(for: 3), 1)
         XCTAssertEqual(StudyPlanService.recommendedStageOrder(for: 5), 2)
         XCTAssertEqual(StudyPlanService.recommendedStageOrder(for: 8), 3)
+        XCTAssertEqual(StudyPlanService.recommendedStageOrder(for: 10), 4)
     }
 }

@@ -3,7 +3,7 @@ import SwiftData
 
 @MainActor
 enum SeedService {
-    private static let tutorialContentVersion = 6
+    private static let tutorialContentVersion = 8
     private static let tutorialContentVersionKey = "tutorialContentVersion"
 
     static func seedIfNeeded(in context: ModelContext) {
@@ -15,85 +15,172 @@ enum SeedService {
     }
 
     private static func seedStagesIfNeeded(in context: ModelContext) {
-        let descriptor = FetchDescriptor<Stage>()
-        guard (try? context.fetchCount(descriptor)) == 0 else { return }
+        let existingStages = (try? context.fetch(FetchDescriptor<Stage>())) ?? []
+        let wasInitialSeed = existingStages.isEmpty
+        let existingTopics = existingStages.flatMap(\.topics)
+        let existingTutorials = existingTopics.flatMap(\.tutorials)
+        let existingExercises = existingTopics.flatMap(\.exercises)
+
+        var stageMap = Dictionary(uniqueKeysWithValues: existingStages.map { ($0.id, $0) })
+        var topicMap = Dictionary(uniqueKeysWithValues: existingTopics.map { ($0.id, $0) })
+        var tutorialMap = Dictionary(uniqueKeysWithValues: existingTutorials.map { ($0.id, $0) })
+        var exerciseMap = Dictionary(uniqueKeysWithValues: existingExercises.map { ($0.id, $0) })
 
         for stageSeed in LearningCatalog.stages {
-            let stage = Stage(
-                id: stageSeed.id,
-                order: stageSeed.order,
-                title: stageSeed.title,
-                subtitle: stageSeed.subtitle,
-                icon: stageSeed.icon,
-                themeHex: stageSeed.themeHex
-            )
-            context.insert(stage)
+            let stage = stageMap[stageSeed.id] ?? {
+                let record = Stage(
+                    id: stageSeed.id,
+                    order: stageSeed.order,
+                    title: stageSeed.title,
+                    subtitle: stageSeed.subtitle,
+                    icon: stageSeed.icon,
+                    themeHex: stageSeed.themeHex
+                )
+                context.insert(record)
+                stageMap[stageSeed.id] = record
+                return record
+            }()
+
+            stage.order = stageSeed.order
+            stage.title = stageSeed.title
+            stage.subtitle = stageSeed.subtitle
+            stage.icon = stageSeed.icon
+            stage.themeHex = stageSeed.themeHex
 
             for topicSeed in stageSeed.topics {
-                let topic = Topic(
-                    id: topicSeed.id,
-                    order: topicSeed.order,
-                    title: topicSeed.title,
-                    summary: topicSeed.summary,
-                    estimatedMinutes: topicSeed.estimatedMinutes
-                )
-                context.insert(topic)
+                let topic = topicMap[topicSeed.id] ?? {
+                    let record = Topic(
+                        id: topicSeed.id,
+                        order: topicSeed.order,
+                        title: topicSeed.title,
+                        summary: topicSeed.summary,
+                        estimatedMinutes: topicSeed.estimatedMinutes
+                    )
+                    context.insert(record)
+                    topicMap[topicSeed.id] = record
+                    return record
+                }()
+
+                topic.order = topicSeed.order
+                topic.title = topicSeed.title
+                topic.summary = topicSeed.summary
+                topic.estimatedMinutes = topicSeed.estimatedMinutes
                 topic.stage = stage
-                stage.topics.append(topic)
+                if !stage.topics.contains(where: { $0.id == topic.id }) {
+                    stage.topics.append(topic)
+                }
 
                 for tutorialSeed in topicSeed.tutorials {
-                    let tutorial = Tutorial(
-                        id: tutorialSeed.id,
-                        order: tutorialSeed.order,
-                        title: tutorialSeed.title,
-                        summary: tutorialSeed.summary,
-                        markdown: TutorialContentComposer.expandedMarkdown(
+                    let tutorial = tutorialMap[tutorialSeed.id] ?? {
+                        let record = Tutorial(
+                            id: tutorialSeed.id,
+                            order: tutorialSeed.order,
+                            title: tutorialSeed.title,
+                            summary: tutorialSeed.summary,
+                            markdown: "",
+                            commonMistakes: tutorialSeed.commonMistakes
+                        )
+                        context.insert(record)
+                        tutorialMap[tutorialSeed.id] = record
+                        return record
+                    }()
+
+                    tutorial.order = tutorialSeed.order
+                    tutorial.title = tutorialSeed.title
+                    tutorial.summary = tutorialSeed.summary
+                    tutorial.codeLanguage = tutorialSeed.codeLanguage
+                    tutorial.code = tutorialSeed.code
+                    tutorial.secondCodeLanguage = tutorialSeed.secondCodeLanguage
+                    tutorial.secondCode = tutorialSeed.secondCode
+                    tutorial.commonMistakes = tutorialSeed.commonMistakes
+                    if tutorial.markdown.isEmpty {
+                        tutorial.markdown = TutorialContentComposer.expandedMarkdown(
                             tutorial: tutorialSeed,
                             topic: topicSeed,
                             stage: stageSeed
-                        ),
-                        codeLanguage: tutorialSeed.codeLanguage,
-                        code: tutorialSeed.code,
-                        secondCodeLanguage: tutorialSeed.secondCodeLanguage,
-                        secondCode: tutorialSeed.secondCode,
-                        commonMistakes: tutorialSeed.commonMistakes
-                    )
-                    context.insert(tutorial)
+                        )
+                    }
                     tutorial.topic = topic
-                    topic.tutorials.append(tutorial)
+                    if !topic.tutorials.contains(where: { $0.id == tutorial.id }) {
+                        topic.tutorials.append(tutorial)
+                    }
                 }
 
                 for exerciseSeed in topicSeed.exercises {
-                    let exercise = Exercise(
-                        id: exerciseSeed.id,
-                        order: exerciseSeed.order,
-                        title: exerciseSeed.title,
-                        kind: exerciseSeed.kind,
-                        question: exerciseSeed.question,
-                        options: exerciseSeed.options,
-                        answer: exerciseSeed.answer,
-                        explanation: exerciseSeed.explanation,
-                        starterCode: exerciseSeed.starterCode,
-                        codeLanguage: exerciseSeed.codeLanguage
-                    )
-                    context.insert(exercise)
+                    let exercise = exerciseMap[exerciseSeed.id] ?? {
+                        let record = Exercise(
+                            id: exerciseSeed.id,
+                            order: exerciseSeed.order,
+                            title: exerciseSeed.title,
+                            kind: exerciseSeed.kind,
+                            question: exerciseSeed.question,
+                            answer: exerciseSeed.answer,
+                            explanation: exerciseSeed.explanation
+                        )
+                        context.insert(record)
+                        exerciseMap[exerciseSeed.id] = record
+                        return record
+                    }()
+
+                    exercise.order = exerciseSeed.order
+                    exercise.title = exerciseSeed.title
+                    exercise.kindRawValue = exerciseSeed.kind.rawValue
+                    exercise.question = exerciseSeed.question
+                    exercise.options = exerciseSeed.options
+                    exercise.answer = exerciseSeed.answer
+                    exercise.explanation = exerciseSeed.explanation
+                    exercise.starterCode = exerciseSeed.starterCode
+                    exercise.codeLanguage = exerciseSeed.codeLanguage
                     exercise.topic = topic
-                    topic.exercises.append(exercise)
+                    if !topic.exercises.contains(where: { $0.id == exercise.id }) {
+                        topic.exercises.append(exercise)
+                    }
                 }
             }
+        }
+
+        do {
+            try context.save()
+            if wasInitialSeed {
+                UserDefaults.standard.set(tutorialContentVersion, forKey: tutorialContentVersionKey)
+            }
+        } catch {
+            // 保留旧版本号，下次启动会继续补齐，避免把不完整内容标记为完成。
+        }
+    }
+
+
+    private static func seedConceptsIfNeeded(in context: ModelContext) {
+        let existing = (try? context.fetch(FetchDescriptor<Concept>())) ?? []
+        var conceptMap = Dictionary(uniqueKeysWithValues: existing.map { ($0.id, $0) })
+
+        for seed in ConceptCatalog.all {
+            let concept = conceptMap[seed.id] ?? {
+                let record = Concept(
+                    id: seed.id,
+                    name: seed.name,
+                    aliases: seed.aliases,
+                    category: seed.category,
+                    summary: seed.summary,
+                    details: seed.details,
+                    relatedTutorialIDs: seed.relatedTutorialIDs
+                )
+                context.insert(record)
+                conceptMap[seed.id] = record
+                return record
+            }()
+
+            concept.name = seed.name
+            concept.aliases = seed.aliases
+            concept.category = seed.category
+            concept.summary = seed.summary
+            concept.details = seed.details
+            concept.relatedTutorialIDs = seed.relatedTutorialIDs
         }
 
         try? context.save()
     }
 
-
-    private static func seedConceptsIfNeeded(in context: ModelContext) {
-        let descriptor = FetchDescriptor<Concept>()
-        guard (try? context.fetchCount(descriptor)) == 0 else { return }
-
-        ConceptCatalog.all.forEach(context.insert)
-        try? context.save()
-    }
 
     private static func seedResourcesIfNeeded(in context: ModelContext) {
         let tutorials = (try? context.fetch(FetchDescriptor<Tutorial>())) ?? []

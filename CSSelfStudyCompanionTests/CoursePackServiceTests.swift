@@ -11,9 +11,9 @@ final class CoursePackServiceTests: XCTestCase {
 
         let pack = try CoursePackService.exportPack(from: context)
         XCTAssertEqual(pack.formatVersion, CoursePackService.currentFormatVersion)
-        XCTAssertEqual(pack.stages.count, 11)
-        XCTAssertEqual(pack.stages.flatMap(\.topics).flatMap(\.tutorials).count, 19)
-        XCTAssertEqual(pack.stages.flatMap(\.topics).flatMap(\.tutorials).flatMap(\.resources).count, 62)
+        XCTAssertEqual(pack.stages.count, 13)
+        XCTAssertEqual(pack.stages.flatMap(\.topics).flatMap(\.tutorials).count, 28)
+        XCTAssertEqual(pack.stages.flatMap(\.topics).flatMap(\.tutorials).flatMap(\.resources).count, 89)
     }
 
     func testImportIntoEmptyDatabaseRestoresCourse() throws {
@@ -24,12 +24,12 @@ final class CoursePackServiceTests: XCTestCase {
         let targetContainer = try AppTestSupport.makeContainer()
         let report = try CoursePackService.importPack(pack, into: targetContainer.mainContext)
 
-        XCTAssertEqual(report.addedStages, 11)
-        XCTAssertEqual(report.addedTutorials, 19)
-        XCTAssertEqual(report.addedResources, 62)
-        XCTAssertEqual(try AppTestSupport.fetch(Stage.self, in: targetContainer.mainContext).count, 11)
-        XCTAssertEqual(try AppTestSupport.fetch(Tutorial.self, in: targetContainer.mainContext).count, 19)
-        XCTAssertEqual(try AppTestSupport.fetch(LearningResource.self, in: targetContainer.mainContext).count, 62)
+        XCTAssertEqual(report.addedStages, 13)
+        XCTAssertEqual(report.addedTutorials, 28)
+        XCTAssertEqual(report.addedResources, 89)
+        XCTAssertEqual(try AppTestSupport.fetch(Stage.self, in: targetContainer.mainContext).count, 13)
+        XCTAssertEqual(try AppTestSupport.fetch(Tutorial.self, in: targetContainer.mainContext).count, 28)
+        XCTAssertEqual(try AppTestSupport.fetch(LearningResource.self, in: targetContainer.mainContext).count, 89)
     }
 
     func testCourseUpdatePreservesUserProgress() throws {

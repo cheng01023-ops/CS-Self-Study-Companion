@@ -4,7 +4,7 @@ enum CatalogAdvanced {
     static let stages: [LearningStageSeed] = [
         LearningStageSeed(
             id: "stage-8",
-            order: 8,
+            order: 10,
             title: "编译原理",
             subtitle: "让源代码经过词法、语法、语义和代码生成，变成可执行语义。",
             icon: "textformat.abc.dottedunderline",
@@ -200,7 +200,7 @@ static Token next_operator(const char *source, size_t *position, size_t start) {
         ),
         LearningStageSeed(
             id: "stage-9",
-            order: 9,
+            order: 11,
             title: "数据库系统",
             subtitle: "理解数据如何持久化、索引、并发和恢复。",
             icon: "cylinder.split.1x2",
@@ -336,7 +336,7 @@ ORDER BY total_cents DESC;
         ),
         LearningStageSeed(
             id: "stage-10",
-            order: 10,
+            order: 12,
             title: "方向专精",
             subtitle: "在共同基础上选择嵌入式、后端、内核、安全或 Apple 平台方向。",
             icon: "scope",
@@ -357,7 +357,7 @@ ORDER BY total_cents DESC;
                             markdown: #"""
 # 专精不是抛弃基础
 
-阶段 0 到 9 建立的是共同底座：C、Linux、系统、网络、数据库和工程工具。专精决定你把时间投入到哪类问题。选择时不要只问“哪个薪资高”，还要看自己愿意长期调试什么：硬件、分布式请求、内核故障、攻击面，还是交互体验。
+阶段 0 到 11 建立的是共同底座：C、Linux、数学、计算理论、系统、网络、数据库和工程工具。专精决定你把时间投入到哪类问题。选择时不要只问“哪个薪资高”，还要看自己愿意长期调试什么：硬件、分布式请求、内核故障、攻击面，还是交互体验。
 
 嵌入式方向深入 C/C++、寄存器、GPIO、RTOS、交叉编译、通信协议和功耗。后端方向深入数据库、缓存、消息队列、API 设计、可观测性和高并发。内核方向关注内存管理、调度、文件系统、驱动和补丁流程。安全方向需要网络、系统、密码学和逆向基础，必须坚持授权测试。iOS/macOS 方向关注 Swift、SwiftUI、平台框架、性能、无障碍和 App Store 生命周期。
 

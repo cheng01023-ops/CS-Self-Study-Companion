@@ -60,6 +60,69 @@ enum ReviewService {
         try? context.save()
     }
 
+    static func addLabFailure(
+        tutorialID: String,
+        title: String,
+        question: String,
+        referenceAnswer: String,
+        in context: ModelContext
+    ) {
+        let sourceID = "lab:\(tutorialID):review"
+        if let existing = item(forSourceID: sourceID, in: context) {
+            existing.title = title
+            existing.question = question
+            existing.referenceAnswer = referenceAnswer
+            existing.isArchived = false
+            resetSchedule(existing, dueImmediately: true)
+        } else {
+            context.insert(
+                ReviewItem(
+                    id: "review:\(sourceID)",
+                    sourceType: "lab",
+                    sourceID: sourceID,
+                    title: title,
+                    question: question,
+                    referenceAnswer: referenceAnswer,
+                    explanation: "实验未通过时进入复习。先重新复现最小错误，再用输出、退出码或系统状态证明修复。",
+                    parentTutorialID: tutorialID,
+                    dueAt: .now
+                )
+            )
+        }
+        try? context.save()
+    }
+
+    static func addOpenSourceReading(
+        missionID: String,
+        title: String,
+        question: String,
+        referenceAnswer: String,
+        in context: ModelContext
+    ) {
+        let sourceID = "open-source:\(missionID):review"
+        if let existing = item(forSourceID: sourceID, in: context) {
+            existing.title = title
+            existing.question = question
+            existing.referenceAnswer = referenceAnswer
+            existing.isArchived = false
+            resetSchedule(existing, dueImmediately: true)
+        } else {
+            context.insert(
+                ReviewItem(
+                    id: "review:\(sourceID)",
+                    sourceType: "open-source",
+                    sourceID: sourceID,
+                    title: title,
+                    question: question,
+                    referenceAnswer: referenceAnswer,
+                    explanation: "重新回到真实仓库，先画调用链，再用源码位置和运行证据回答。不要只记结论。",
+                    dueAt: .now
+                )
+            )
+        }
+        try? context.save()
+    }
+
     static func recordWrongExercise(exercise: Exercise, userAnswer: String, in context: ModelContext) {
         let sourceID = String.exerciseProgressID(exercise.id)
         if let existing = item(forSourceID: sourceID, in: context) {
