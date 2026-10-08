@@ -28,6 +28,46 @@ final class AppNavigationUITests: XCTestCase {
     }
 
     @MainActor
+    func testPracticeStudioAndHeatmapOpen() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-disable-sync", "-disable-diagnostic"]
+        app.launch()
+
+        let practice = app.buttons["quick-practice-studio"]
+        for _ in 0..<6 where !practice.isHittable {
+            app.swipeUp()
+        }
+        XCTAssertTrue(practice.waitForExistence(timeout: 10))
+        practice.tap()
+
+        XCTAssertTrue(app.navigationBars["练习与掌握度"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["动态练习与掌握度"].waitForExistence(timeout: 10))
+
+        let heatmap = app.buttons["mastery-heatmap-mode"]
+        XCTAssertTrue(heatmap.waitForExistence(timeout: 10))
+        heatmap.tap()
+        XCTAssertTrue(app.staticTexts["掌握度热力图"].waitForExistence(timeout: 10))
+    }
+
+    @MainActor
+    func testAdaptiveLearningPathOpens() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-disable-sync", "-disable-diagnostic"]
+        app.launch()
+
+        let adaptive = app.buttons["adaptive-path-link"]
+        for _ in 0..<4 where !adaptive.isHittable {
+            app.swipeUp()
+        }
+        XCTAssertTrue(adaptive.waitForExistence(timeout: 10))
+        adaptive.tap()
+
+        XCTAssertTrue(app.navigationBars["自适应路线"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["知识依赖图谱驱动的学习路线"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["下一步推荐"].waitForExistence(timeout: 10))
+    }
+
+    @MainActor
     func testOpenVerifiableLabFromTutorial() throws {
         let app = XCUIApplication()
         app.launchArguments += ["-disable-sync", "-disable-diagnostic"]
@@ -37,18 +77,7 @@ final class AppNavigationUITests: XCTestCase {
         XCTAssertTrue(continueButton.waitForExistence(timeout: 20))
         continueButton.tap()
 
-        let topic = app.buttons.matching(
-            NSPredicate(format: "label CONTAINS %@", "从 Finder 走进终端")
-        ).firstMatch
-        XCTAssertTrue(topic.waitForExistence(timeout: 10))
-        topic.tap()
-
-        let tutorial = app.buttons.matching(
-            NSPredicate(format: "label CONTAINS %@", "终端、文件权限与第一套工具链")
-        ).firstMatch
-        XCTAssertTrue(tutorial.waitForExistence(timeout: 10))
-        tutorial.tap()
-
+        XCTAssertTrue(app.navigationBars["终端、文件权限与第一套工具链"].waitForExistence(timeout: 10))
         let labLabel = app.staticTexts["可验证实验课"]
         if !labLabel.waitForExistence(timeout: 5) {
             app.swipeUp()
@@ -107,6 +136,16 @@ final class AppNavigationUITests: XCTestCase {
         XCTAssertTrue(app.navigationBars["命令行通讯录"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.staticTexts["工程实施路径"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.staticTexts["仓库地图"].waitForExistence(timeout: 10))
+
+        let workspace = app.buttons["project-workspace-link"]
+        for _ in 0..<5 where !workspace.isHittable {
+            app.swipeUp()
+        }
+        XCTAssertTrue(workspace.waitForExistence(timeout: 10))
+        workspace.tap()
+
+        XCTAssertTrue(app.navigationBars["工程验收工作台"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["选择项目目录"].waitForExistence(timeout: 10))
     }
 
     @MainActor

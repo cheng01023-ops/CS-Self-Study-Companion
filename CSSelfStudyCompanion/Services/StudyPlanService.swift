@@ -35,6 +35,7 @@ enum StudyPlanService {
         weakConcept: WeakConcept?,
         tutorials: [Tutorial],
         completedTutorialIDs: Set<String>,
+        preferredTutorialID: String? = nil,
         dailyMinutes: Int = 60
     ) -> [StudyPlanItem] {
         var items: [StudyPlanItem] = []
@@ -65,9 +66,16 @@ enum StudyPlanService {
             )
         }
 
-        if let tutorial = tutorials
-            .sorted(by: { $0.order < $1.order })
-            .first(where: { !completedTutorialIDs.contains($0.id) }) {
+        let orderedTutorials = tutorials
+            .sorted(by: AdaptiveLearningService.tutorialOrder)
+        let preferredTutorial = preferredTutorialID.flatMap { identifier in
+            orderedTutorials.first { $0.id == identifier && !completedTutorialIDs.contains($0.id) }
+        }
+        let nextTutorial = preferredTutorial ?? orderedTutorials.first {
+            !completedTutorialIDs.contains($0.id)
+        }
+
+        if let tutorial = nextTutorial {
             items.append(
                 StudyPlanItem(
                     id: "tutorial:\(tutorial.id)",

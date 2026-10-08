@@ -298,6 +298,15 @@ struct ProgressDashboardView: View {
                     }
                 }
             }
+
+            NavigationLink(value: AppRoute.practiceStudio) {
+                Label("开始动态训练与查看热力图", systemImage: "bolt.fill")
+                    .font(.subheadline.weight(.bold))
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.orange)
+            .accessibilityIdentifier("open-practice-studio")
         }
         .learningCard()
     }

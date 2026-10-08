@@ -21,6 +21,7 @@ struct RoadmapView: View {
                     hero
                     dailyFocusCard
                     dailyPlanCard
+                    adaptivePathPreview
                     quickTools
                     projectsPreview
                     labsPreview
@@ -136,24 +137,39 @@ struct RoadmapView: View {
     private var dailyFocusCard: some View {
         let dueCount = ReviewService.dueItems(from: reviewItems).count
         let weak = MasteryService.weakConcepts(concepts: concepts, records: masteryRecords, limit: 1).first
+        let adaptive = adaptiveSnapshot.nextItem
         let stage = nextStage
-        let color: Color = dueCount > 0 ? .teal : weak == nil ? (stage.map { Color(hex: $0.themeHex) } ?? .indigo) : .orange
+
+        let color: Color
         let title: String
         let subtitle: String
         let icon: String
+        let route: AppRoute?
 
         if dueCount > 0 {
+            color = .teal
             title = "完成 \(dueCount) 项到期复习"
             subtitle = "先巩固长期记忆，再继续学习新内容。"
             icon = "brain.head.profile"
+            route = nil
+        } else if let adaptive {
+            color = adaptiveColor(adaptive.level)
+            title = adaptiveTitle(adaptive)
+            subtitle = adaptive.reason
+            icon = adaptive.level.icon
+            route = adaptiveRoute(adaptive)
         } else if let weak {
+            color = .orange
             title = "加强概念：\(weak.concept.name)"
             subtitle = "掌握度 \(Int(weak.record.score * 100))%，建议完成一次主动回忆和练习。"
             icon = "target"
+            route = .practiceStudio
         } else {
+            color = stage.map { Color(hex: $0.themeHex) } ?? .indigo
             title = stage.map { "继续阶段 \($0.order)：\($0.title)" } ?? "所有阶段都已完成"
             subtitle = stage?.subtitle ?? "可以回顾错题并完成综合项目。"
             icon = stage?.icon ?? "flag.checkered"
+            route = stage.map { .stage($0.id) }
         }
 
         return HStack(spacing: 14) {
@@ -180,20 +196,8 @@ struct RoadmapView: View {
 
             Spacer(minLength: 8)
 
-            if let weak {
-                NavigationLink(value: AppRoute.concept(weak.concept.id)) {
-                    Image(systemName: "arrow.right")
-                        .font(.subheadline.bold())
-                        .foregroundStyle(.white)
-                        .frame(width: 38, height: 38)
-                        .background(color.gradient, in: Circle())
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("打开薄弱概念")
-            } else if dueCount == 0, let stage {
-                Button {
-                    path.append(.stage(stage.id))
-                } label: {
+            if let route {
+                NavigationLink(value: route) {
                     Image(systemName: "arrow.right")
                         .font(.subheadline.bold())
                         .foregroundStyle(.white)
@@ -205,6 +209,63 @@ struct RoadmapView: View {
             }
         }
         .learningCard()
+    }
+
+    private var adaptivePathPreview: some View {
+        let snapshot = adaptiveSnapshot
+        let next = snapshot.nextItem
+        return NavigationLink(value: AppRoute.adaptivePath) {
+            HStack(alignment: .top, spacing: 13) {
+                Image(systemName: "point.3.connected.trianglepath.dotted")
+                    .font(.title2)
+                    .foregroundStyle(.white)
+                    .frame(width: 46, height: 46)
+                    .background(
+                        LinearGradient(colors: [.indigo, .teal], startPoint: .topLeading, endPoint: .bottomTrailing),
+                        in: RoundedRectangle(cornerRadius: 13)
+                    )
+
+                VStack(alignment: .leading, spacing: 5) {
+                    HStack {
+                        Text("自适应学习路线")
+                            .font(.headline)
+                            .foregroundStyle(.primary)
+                        Spacer()
+                        Text("\(Int(snapshot.overallReadiness * 100))% 就绪")
+                            .font(.caption.monospacedDigit().weight(.bold))
+                            .foregroundStyle(.indigo)
+                    }
+                    if let next {
+                        Text(adaptiveTitle(next))
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(.primary)
+                            .lineLimit(1)
+                        Text(next.reason)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(2)
+                    } else {
+                        Text("所有教程均已完成，继续复习或挑战项目。")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    HStack(spacing: 10) {
+                        Label("\(snapshot.readyCount) 可开始", systemImage: "play.circle")
+                        Label("\(snapshot.bridgeCount) 需补桥", systemImage: "arrow.triangle.branch")
+                    }
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                }
+
+                Image(systemName: "chevron.right")
+                    .font(.caption.bold())
+                    .foregroundStyle(.tertiary)
+                    .padding(.top, 4)
+            }
+            .learningCard()
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("adaptive-path-link")
     }
 
     private var dailyPlanCard: some View {
@@ -285,7 +346,8 @@ struct RoadmapView: View {
             dueReviewCount: dueCount,
             weakConcept: weak,
             tutorials: tutorials,
-            completedTutorialIDs: completedIDs
+            completedTutorialIDs: completedIDs,
+            preferredTutorialID: adaptiveSnapshot.nextItem?.recommendedTutorial.id
         )
     }
 
@@ -294,6 +356,16 @@ struct RoadmapView: View {
             HStack(spacing: 12) {
                 quickStat(icon: "list.number", title: "分步教程", detail: "40+ 章节", tint: .indigo)
                 quickStat(icon: "chevron.left.forwardslash.chevron.right", title: "C 与 Swift", detail: "运行验证", tint: .purple)
+                NavigationLink(value: AppRoute.adaptivePath) {
+                    quickStat(icon: "point.3.connected.trianglepath.dotted", title: "自适应路线", detail: "\(adaptiveSnapshot.readyCount) 可开始", tint: .indigo)
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("quick-adaptive-path")
+                NavigationLink(value: AppRoute.practiceStudio) {
+                    quickStat(icon: "bolt.fill", title: "动态训练", detail: "薄弱概念混练", tint: .orange)
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("quick-practice-studio")
                 NavigationLink(value: AppRoute.codeReading) {
                     quickStat(icon: "doc.text.magnifyingglass", title: "代码阅读", detail: "\(OpenSourceReadingCatalog.missions.count) 条路线", tint: .teal)
                 }
@@ -421,6 +493,44 @@ struct RoadmapView: View {
                     }
                 }
             }
+        }
+    }
+
+    private var adaptiveSnapshot: AdaptiveLearningSnapshot {
+        AdaptiveLearningService.snapshot(
+            tutorials: tutorials,
+            concepts: concepts,
+            masteryRecords: masteryRecords,
+            progressRecords: progressRecords
+        )
+    }
+
+    private func adaptiveTitle(_ item: AdaptiveTutorialReadiness) -> String {
+        if item.recommendedTutorial.id != item.tutorial.id {
+            return "先补桥：\(item.recommendedTutorial.title)"
+        }
+        return "继续学习：\(item.tutorial.title)"
+    }
+
+    private func adaptiveRoute(_ item: AdaptiveTutorialReadiness) -> AppRoute {
+        if item.level == .ready {
+            return .tutorial(item.tutorial.id)
+        }
+        if let remediation = item.remediationTutorials.first {
+            return .tutorial(remediation.id)
+        }
+        if let concept = item.missingConcepts.first {
+            return .concept(concept.concept.id)
+        }
+        return .tutorial(item.tutorial.id)
+    }
+
+    private func adaptiveColor(_ level: AdaptiveReadinessLevel) -> Color {
+        switch level {
+        case .completed: .green
+        case .ready: .indigo
+        case .nearlyReady: .orange
+        case .needsBridge: .red
         }
     }
 

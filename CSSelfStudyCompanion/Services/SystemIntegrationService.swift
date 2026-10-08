@@ -44,6 +44,8 @@ enum SystemIntegrationService {
         guard url.scheme == "csxuexi" else { return nil }
         let components = url.pathComponents.filter { $0 != "/" }
         guard let type = url.host ?? components.first else { return nil }
+        if type == "adaptive-path" { return .adaptivePath }
+        if type == "practice-studio" { return .practiceStudio }
         if type == "code-reading" { return .codeReading }
         if type == "portfolio" { return .portfolio }
 
@@ -54,6 +56,7 @@ enum SystemIntegrationService {
         case "tutorial": return .tutorial(identifier)
         case "stage": return .stage(identifier)
         case "project": return .project(identifier)
+        case "project-workspace": return .projectWorkspace(identifier)
         case "lab": return .lab(identifier)
         case "code-reading": return .codeReading
         default: return nil

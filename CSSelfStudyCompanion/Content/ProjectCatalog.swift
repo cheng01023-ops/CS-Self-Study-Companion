@@ -1,6 +1,6 @@
 import Foundation
 
-enum ProjectTrack: String, CaseIterable, Identifiable {
+enum ProjectTrack: String, CaseIterable, Identifiable, Sendable {
     case foundation
     case systems
     case network
@@ -55,7 +55,7 @@ enum ProjectTrack: String, CaseIterable, Identifiable {
     }
 }
 
-enum ProjectEngineeringPhase: String, CaseIterable, Identifiable {
+enum ProjectEngineeringPhase: String, CaseIterable, Identifiable, Sendable {
     case specification
     case scaffold
     case core
@@ -88,14 +88,14 @@ enum ProjectEngineeringPhase: String, CaseIterable, Identifiable {
     }
 }
 
-struct ProjectRepositoryArea: Identifiable, Hashable {
+struct ProjectRepositoryArea: Identifiable, Hashable, Sendable {
     let path: String
     let purpose: String
 
     var id: String { path }
 }
 
-struct ProjectMilestone: Identifiable {
+struct ProjectMilestone: Identifiable, Sendable {
     let id: String
     let phase: ProjectEngineeringPhase
     let title: String
@@ -104,7 +104,7 @@ struct ProjectMilestone: Identifiable {
     let checks: [String]
 }
 
-struct LearningProject: Identifiable {
+struct LearningProject: Identifiable, Sendable {
     let id: String
     let track: ProjectTrack
     let order: Int

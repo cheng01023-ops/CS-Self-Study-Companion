@@ -97,7 +97,7 @@ struct GuideView: View {
         VStack(alignment: .leading, spacing: 12) {
             Label("遇到问题怎么办", systemImage: "wrench.and.screwdriver.fill")
                 .font(.title3.bold())
-            FAQRow(question: "不知道从哪里开始？", answer: "回到首页，点击“今日建议”。它会优先安排到期复习、薄弱概念或下一阶段。")
+            FAQRow(question: "不知道从哪里开始？", answer: "回到首页，点击“今日建议”或“自适应路线”。系统会结合概念依赖、教程完成度、练习和复习掌握度，推荐下一步以及需要优先补桥的前置内容。")
             FAQRow(question: "教程太长怎么办？", answer: "在教程页切换“快速 / 标准 / 深度”。快速模式只保留核心理解和基础实验，深度模式再展开全部内容。")
             FAQRow(question: "可验证实验课怎么完成？", answer: "按“目标、预测、准备、执行、验证、复盘”六步前进。执行阶段保存原始输出和退出码，验证阶段逐条勾选验收清单，复盘阶段写根因和收获；未通过时可以一键加入复习。")
             FAQRow(question: "代码运行失败？", answer: "先看标准错误，从第一条错误开始修复。macOS 会直接编译运行；iPhone 会连接同一局域网内正在运行的 Mac，由 Mac 在沙盒中编译并把输出返回手机。")
@@ -202,7 +202,8 @@ private enum GuideContent {
                 GuideItem(title: "今日建议", detail: "首页会优先推荐到期复习、掌握度较低的概念，以及下一个未完成阶段。"),
                 GuideItem(title: "今日三步计划", detail: "系统根据复习、薄弱概念和下一课自动生成约 60 分钟的三步任务。"),
                 GuideItem(title: "阶段卡片", detail: "卡片显示主题数量、预计时间和完成百分比，点击进入阶段详情。"),
-                GuideItem(title: "数学与理论主线", detail: "阶段 4 覆盖离散数学、证明、线性代数、概率和信息论；阶段 5 覆盖自动机、可计算性、复杂度、算法范式和程序语义。两条阶段会自动进入教程、实验、练习和复习闭环。")
+                GuideItem(title: "数学与理论主线", detail: "阶段 4 覆盖离散数学、证明、线性代数、概率和信息论；阶段 5 覆盖自动机、可计算性、复杂度、算法范式和程序语义。两条阶段会自动进入教程、实验、练习和复习闭环。"),
+                GuideItem(title: "自适应路线", detail: "首页和阶段页会显示就绪度，区分“可开始”“建议复习”和“需要补桥”。系统只调整推荐顺序，不会锁住教程，你仍然可以自由学习。")
             ]
         ),
         GuideSection(
@@ -293,6 +294,8 @@ private enum GuideContent {
                 GuideItem(title: "工程阶梯", detail: "项目按 C/Linux、系统并发、网络服务、数据存储、编译器和 Apple 平台六条轨道排列，从 CLI 工具逐步进入服务器和存储引擎。"),
                 GuideItem(title: "工程档案", detail: "每个项目都有预计工时、前置条件、仓库地图、分阶段里程碑、质量门禁、发布清单和配套开源阅读。"),
                 GuideItem(title: "开始项目", detail: "先复制 README 草案建立仓库骨架，再逐项完成阶段；每个里程碑可以单独写工程证据，通过标准需要源码、测试或运行结果支持。"),
+                GuideItem(title: "工程验收工作台", detail: "在项目详情中打开工作台并选择项目目录，系统会检查仓库结构、README、许可证、测试入口、Git 状态、代码卫生和可用构建命令。macOS 可以直接运行构建与测试，iOS 只执行静态验收。"),
+                GuideItem(title: "验收报告", detail: "工作台会计算静态得分并生成 Markdown 报告，可复制、分享或保存到项目证据。构建命令通过后，构建门禁会更新为通过。"),
                 GuideItem(title: "项目作品集", detail: "作品集按轨道展示推荐下一项工程、项目完成度、质量门禁和 Markdown 导出报告。"),
                 GuideItem(title: "互动实验室", detail: "位运算、内存布局、TCP 握手和哈希碰撞可以通过操作观察原理，不要只看结论。")
             ]
@@ -306,6 +309,8 @@ private enum GuideContent {
                 GuideItem(title: "完成度", detail: "完成教程和练习会更新阶段、主题和总进度。"),
                 GuideItem(title: "掌握度", detail: "主动回忆、练习、代码判题和复习都会改变概念掌握分数。"),
                 GuideItem(title: "薄弱概念", detail: "低于掌握阈值的概念会出现在优先加强列表。"),
+                GuideItem(title: "动态训练", detail: "练习页会根据薄弱概念动态生成题目，并混排不同主题。答错会立即进入复习，答对后进入正常间隔训练。"),
+                GuideItem(title: "掌握热力图", detail: "按概念类别显示掌握度颜色；灰色表示还没有练习或复习证据，点击方块可以进入概念详情。"),
                 GuideItem(title: "推荐下一步", detail: "系统会优先安排到期复习和薄弱概念，再推荐继续阶段。"),
                 GuideItem(title: "每日提醒", detail: "进度页可以开启每天固定时间的学习提醒，并可随时修改时间或关闭。"),
                 GuideItem(title: "性能与稳定性", detail: "查看数据库大小、打开耗时、同步耗时和运行指标。"),

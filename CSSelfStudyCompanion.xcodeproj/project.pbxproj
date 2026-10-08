@@ -49,6 +49,7 @@
 		4E584083C631D508CFBCB794 /* KnowledgeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A108FDF0C5F067435C135AF /* KnowledgeService.swift */; };
 		4EBA588F102C544AA87C7D73 /* TestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58542AE5483EC4092988519C /* TestSupport.swift */; };
 		55F35DFEFB636AF7B1D63876 /* CodeExerciseWorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F888EC6AB70EDBC3546D3C24 /* CodeExerciseWorkspaceView.swift */; };
+		5A965C622764B82F219E6592 /* AdaptivePracticeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63EA320FA0AB40055F10915 /* AdaptivePracticeService.swift */; };
 		5C5A3772D9B879C8F2547F87 /* StudyPlanServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75150385367FE5F4FAAF084B /* StudyPlanServiceTests.swift */; };
 		5DAE8B7C29427DE0C246F800 /* CodeReadingCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56220EBB854F2D5FD69BDACC /* CodeReadingCatalog.swift */; };
 		5E15E36E6025B172CFB09307 /* ConceptDependencyCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE00CF10E0E3DB7ABB24B329 /* ConceptDependencyCatalog.swift */; };
@@ -72,12 +73,15 @@
 		81116EC09892937CFF794090 /* CodeExerciseCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBCE0BB454C74EC7E5C0BDF /* CodeExerciseCatalog.swift */; };
 		82EDAFEF0E590E34BFCEBFF5 /* ReviewServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A22C9D504C2EC7AA8830C2 /* ReviewServiceTests.swift */; };
 		837DF53918CEC1B09914B0CA /* AppSchemaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB619B3F5D52FC8C9EF05A61 /* AppSchemaTests.swift */; };
+		8514EBD4DBCE47B99C440F35 /* PracticeStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5C483BC51678ACE77BC99 /* PracticeStudioView.swift */; };
 		86202BBD33639226BAA66D8A /* DataPortabilityServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB9F2135267243CAD03FB2D /* DataPortabilityServiceTests.swift */; };
+		8FA02F88E09309602ACD1A3A /* ProjectWorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA4E7C01E250F1CF8C00D08 /* ProjectWorkspaceView.swift */; };
 		9047B1FECDC2694150E11E66 /* StudyPlanServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75150385367FE5F4FAAF084B /* StudyPlanServiceTests.swift */; };
 		90D86A8ACABB774D313DC59F /* ProjectPortfolioServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E309E34E9AF571484E9789 /* ProjectPortfolioServiceTests.swift */; };
 		90F5BF1AEFCCB1E19CE54296 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A06519EE12DF09B87EADA3D /* RootView.swift */; };
 		963D8EA2F5A8002958A10921 /* TutorialMasteryCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6F9940E45376E17119257F /* TutorialMasteryCatalog.swift */; };
 		98D26424D6274EEA52623727 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA9FAD030AE37E2EA793420 /* Foundation.framework */; };
+		99187B7DD7876E372C7FD7E0 /* AdaptiveLearningService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90745F467E3AC60E1CB5B51 /* AdaptiveLearningService.swift */; };
 		99719A12EC1374724C12B63B /* CatalogLinuxBasics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C98E65C98BB8F9972D98F36 /* CatalogLinuxBasics.swift */; };
 		9B0D2A32840647D01CFEAAA5 /* MacMenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05014BA043F21E1C2572842 /* MacMenuBarView.swift */; };
 		9CDDB3E39C2DB392BC3A723C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D96B5595E8737260B5DF051 /* Theme.swift */; };
@@ -99,6 +103,7 @@
 		C268DD93A81448BA84BD8288 /* SystemIntegrationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D229B53BAA99634AA4903151 /* SystemIntegrationServiceTests.swift */; };
 		C8D2A9EB60DC7C7E58EB5BBF /* SystemIntegrationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386A89349465DCF27E6D0231 /* SystemIntegrationService.swift */; };
 		CA437DE74C31F5277EC7A88F /* ResourceLinkHealthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57E43B20BE1B8C8AFCA874 /* ResourceLinkHealthService.swift */; };
+		CBE6369AB0014EC55A2CA6A2 /* AdaptivePathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D53DCB3729A960FE98D174 /* AdaptivePathView.swift */; };
 		CDFA9C95B8CC8254E0C49651 /* CoursePackServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF037D7B3AA95C3D14FE76B /* CoursePackServiceTests.swift */; };
 		D0D927B9F917AB700C307216 /* AppDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B92163229B8C3068767844 /* AppDestinationView.swift */; };
 		D216B3BE935E106008F3C6F0 /* ContentVersionHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A63CC6D0B2358AEE4520A2 /* ContentVersionHistoryService.swift */; };
@@ -113,6 +118,7 @@
 		DF19621F35DD6A653EF2D2C1 /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF48729CFA10694C88C7BEF /* ReviewService.swift */; };
 		DFAD79E7F380DC5592EEB749 /* ReleaseReadinessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337CEAF1CC673F42C1518E2B /* ReleaseReadinessView.swift */; };
 		E0091193C50664342742347A /* SeedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F138A3DE7AC4D0C511720322 /* SeedModels.swift */; };
+		E65EEF5343890C5EC76EAB5C /* ProjectWorkspaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C62FC4B03FD3FFEC277855 /* ProjectWorkspaceService.swift */; };
 		E7874810D3B5B317FD85F450 /* AppDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2AED57DAD18D42913434E4 /* AppDataStoreTests.swift */; };
 		E8426BAC2F9450C56E9EF3DC /* OnboardingDiagnosticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8656AFD0354AE83B19B20D6B /* OnboardingDiagnosticView.swift */; };
 		E8AED45A9FDB1D9CAEA9F79A /* AppDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB39D34F914B7A67068F22C /* AppDataStore.swift */; };
@@ -156,6 +162,7 @@
 		0366FB6CE7ACED4348D131DB /* PerformanceDashboardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PerformanceDashboardView.swift; path = CSSelfStudyCompanion/Views/PerformanceDashboardView.swift; sourceTree = "<group>"; };
 		04FF08E217AE5E27D4DF3817 /* ProgressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Services/ProgressService.swift; sourceTree = "<group>"; };
 		095D228C2E7F9E1317963602 /* SyncProtocolTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SyncProtocolTests.swift; sourceTree = "<group>"; };
+		0AA4E7C01E250F1CF8C00D08 /* ProjectWorkspaceView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProjectWorkspaceView.swift; path = CSSelfStudyCompanion/Views/ProjectWorkspaceView.swift; sourceTree = "<group>"; };
 		0BF49B4BCC5B4DE8A01B1BD2 /* CommandCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Content/CommandCatalog.swift; sourceTree = "<group>"; };
 		0BFFFE2BAC20863494771BEE /* CommandReferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Views/CommandReferenceView.swift; sourceTree = "<group>"; };
 		0C57E43B20BE1B8C8AFCA874 /* ResourceLinkHealthService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ResourceLinkHealthService.swift; path = CSSelfStudyCompanion/Services/ResourceLinkHealthService.swift; sourceTree = "<group>"; };
@@ -199,6 +206,7 @@
 		5D192211AA4F9DCD605D95F9 /* CatalogSystems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Content/CatalogSystems.swift; sourceTree = "<group>"; };
 		64E1460A0607051348084D4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CSSelfStudyCompanion/Resources/Assets.xcassets; sourceTree = "<group>"; };
 		65F496FE0DCE0DD0E2A30299 /* DataPortabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Services/DataPortabilityService.swift; sourceTree = "<group>"; };
+		68C62FC4B03FD3FFEC277855 /* ProjectWorkspaceService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProjectWorkspaceService.swift; path = CSSelfStudyCompanion/Services/ProjectWorkspaceService.swift; sourceTree = "<group>"; };
 		68E309E34E9AF571484E9789 /* ProjectPortfolioServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProjectPortfolioServiceTests.swift; sourceTree = "<group>"; };
 		6C98E65C98BB8F9972D98F36 /* CatalogLinuxBasics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Content/CatalogLinuxBasics.swift; sourceTree = "<group>"; };
 		6D14FC117C30A3AEA5D9628C /* ContentVersionHistoryServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ContentVersionHistoryServiceTests.swift; sourceTree = "<group>"; };
@@ -236,16 +244,20 @@
 		C6EB83A20AB09936D26C448F /* TutorialContentComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Content/TutorialContentComposer.swift; sourceTree = "<group>"; };
 		C72C435EEDE87A6D86E46E97 /* CloudSyncServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CloudSyncServiceTests.swift; sourceTree = "<group>"; };
 		CB619B3F5D52FC8C9EF05A61 /* AppSchemaTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppSchemaTests.swift; sourceTree = "<group>"; };
+		CBB5C483BC51678ACE77BC99 /* PracticeStudioView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PracticeStudioView.swift; path = CSSelfStudyCompanion/Views/PracticeStudioView.swift; sourceTree = "<group>"; };
 		CDB5127CF1D6D89250CE7EA6 /* CoursePackView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CoursePackView.swift; path = CSSelfStudyCompanion/Views/CoursePackView.swift; sourceTree = "<group>"; };
 		D05014BA043F21E1C2572842 /* MacMenuBarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MacMenuBarView.swift; path = CSSelfStudyCompanion/App/MacMenuBarView.swift; sourceTree = "<group>"; };
 		D229B53BAA99634AA4903151 /* SystemIntegrationServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SystemIntegrationServiceTests.swift; sourceTree = "<group>"; };
+		D63EA320FA0AB40055F10915 /* AdaptivePracticeService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AdaptivePracticeService.swift; path = CSSelfStudyCompanion/Services/AdaptivePracticeService.swift; sourceTree = "<group>"; };
 		D66B74CDA1DA32F82F6ED3CA /* RoadmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Views/RoadmapView.swift; sourceTree = "<group>"; };
 		D6B92163229B8C3068767844 /* AppDestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Views/AppDestinationView.swift; sourceTree = "<group>"; };
 		D9A4DA62BC7180A3910DD872 /* StudyReminderService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StudyReminderService.swift; path = CSSelfStudyCompanion/Services/StudyReminderService.swift; sourceTree = "<group>"; };
 		DA4C0EAB8FBA6A471E6C6187 /* ProjectCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Content/ProjectCatalog.swift; sourceTree = "<group>"; };
+		E0D53DCB3729A960FE98D174 /* AdaptivePathView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AdaptivePathView.swift; path = CSSelfStudyCompanion/Views/AdaptivePathView.swift; sourceTree = "<group>"; };
 		E221D3AC52381181A4042312 /* ConceptCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Content/ConceptCatalog.swift; sourceTree = "<group>"; };
 		E23A718A4DC9E0BD52708418 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Views/GuideView.swift; sourceTree = "<group>"; };
 		E8A22C9D504C2EC7AA8830C2 /* ReviewServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReviewServiceTests.swift; sourceTree = "<group>"; };
+		E90745F467E3AC60E1CB5B51 /* AdaptiveLearningService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AdaptiveLearningService.swift; path = CSSelfStudyCompanion/Services/AdaptiveLearningService.swift; sourceTree = "<group>"; };
 		E9D03AE0454CBD76970E6C82 /* CatalogTheory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CatalogTheory.swift; path = CSSelfStudyCompanion/Content/CatalogTheory.swift; sourceTree = "<group>"; };
 		ECBCE0BB454C74EC7E5C0BDF /* CodeExerciseCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Content/CodeExerciseCatalog.swift; sourceTree = "<group>"; };
 		EDECF40C474DDA2DE951DA30 /* InteractiveLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSelfStudyCompanion/Views/InteractiveLabView.swift; sourceTree = "<group>"; };
@@ -404,6 +416,12 @@
 				BA1DE23C489CF13CE992B503 /* ReleaseReadinessService.swift */,
 				337CEAF1CC673F42C1518E2B /* ReleaseReadinessView.swift */,
 				E9D03AE0454CBD76970E6C82 /* CatalogTheory.swift */,
+				E90745F467E3AC60E1CB5B51 /* AdaptiveLearningService.swift */,
+				E0D53DCB3729A960FE98D174 /* AdaptivePathView.swift */,
+				68C62FC4B03FD3FFEC277855 /* ProjectWorkspaceService.swift */,
+				0AA4E7C01E250F1CF8C00D08 /* ProjectWorkspaceView.swift */,
+				D63EA320FA0AB40055F10915 /* AdaptivePracticeService.swift */,
+				CBB5C483BC51678ACE77BC99 /* PracticeStudioView.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -736,6 +754,12 @@
 				008AC2968FB4ACA00CD270CC /* ReleaseReadinessService.swift in Sources */,
 				DFAD79E7F380DC5592EEB749 /* ReleaseReadinessView.swift in Sources */,
 				D80A8DD05381F1C8EBE7E894 /* CatalogTheory.swift in Sources */,
+				99187B7DD7876E372C7FD7E0 /* AdaptiveLearningService.swift in Sources */,
+				CBE6369AB0014EC55A2CA6A2 /* AdaptivePathView.swift in Sources */,
+				E65EEF5343890C5EC76EAB5C /* ProjectWorkspaceService.swift in Sources */,
+				8FA02F88E09309602ACD1A3A /* ProjectWorkspaceView.swift in Sources */,
+				5A965C622764B82F219E6592 /* AdaptivePracticeService.swift in Sources */,
+				8514EBD4DBCE47B99C440F35 /* PracticeStudioView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

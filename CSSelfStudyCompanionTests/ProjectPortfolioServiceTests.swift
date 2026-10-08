@@ -54,6 +54,67 @@ final class ProjectPortfolioServiceTests: XCTestCase {
         XCTAssertEqual(next?.project.id, ProjectCatalog.projects[1].id)
     }
 
+    func testProjectWorkspaceScanFindsStructureTestsAndBuildCommand() throws {
+        let project = try XCTUnwrap(ProjectCatalog.projects.first { $0.id == "cli-contacts" })
+        let root = FileManager.default.temporaryDirectory
+            .appendingPathComponent("cs-workspace-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+
+        try FileManager.default.createDirectory(at: root.appendingPathComponent("src"), withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: root.appendingPathComponent("include"), withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: root.appendingPathComponent("tests"), withIntermediateDirectories: true)
+        try "int main(void) { return 0; }".write(to: root.appendingPathComponent("src/main.c"), atomically: true, encoding: .utf8)
+        try "".write(to: root.appendingPathComponent("src/contacts.c"), atomically: true, encoding: .utf8)
+        try "".write(to: root.appendingPathComponent("include/contacts.h"), atomically: true, encoding: .utf8)
+        try "".write(to: root.appendingPathComponent("tests/test_contacts.c"), atomically: true, encoding: .utf8)
+        try "# CLI Contacts".write(to: root.appendingPathComponent("README.md"), atomically: true, encoding: .utf8)
+        try "MIT".write(to: root.appendingPathComponent("LICENSE"), atomically: true, encoding: .utf8)
+        try ".build/".write(to: root.appendingPathComponent(".gitignore"), atomically: true, encoding: .utf8)
+        try "test:\n\t@true\n".write(to: root.appendingPathComponent("Makefile"), atomically: true, encoding: .utf8)
+        try FileManager.default.createDirectory(at: root.appendingPathComponent(".git"), withIntermediateDirectories: true)
+
+        let report = try ProjectWorkspaceService.scan(project: project, rootURL: root)
+        XCTAssertEqual(report.projectID, project.id)
+        XCTAssertGreaterThanOrEqual(report.sourceCounts["c", default: 0], 3)
+        XCTAssertEqual(report.checks.first { $0.id == "structure" }?.status, .passed)
+        XCTAssertEqual(report.checks.first { $0.id == "tests" }?.status, .passed)
+        XCTAssertTrue(report.commands.contains { $0.displayCommand == "make test" })
+        XCTAssertGreaterThan(report.score, 0.8)
+
+        let passing = ProjectCommandResult(
+            id: "run",
+            title: "Make 构建",
+            command: "make test",
+            exitCode: 0,
+            stdout: "ok",
+            stderr: "",
+            duration: 0.1,
+            timedOut: false
+        )
+        let verified = ProjectWorkspaceService.applying(commandResults: [passing], to: report)
+        XCTAssertEqual(verified.checks.first { $0.id == "build" }?.status, .passed)
+        XCTAssertEqual(verified.score, 1, accuracy: 0.0001)
+
+        let markdown = ProjectWorkspaceService.reportMarkdown(report: verified, commandResults: [passing])
+        XCTAssertTrue(markdown.contains("工程验收报告"))
+        XCTAssertTrue(markdown.contains("make test"))
+
+#if os(macOS)
+        let echoCommand = ProjectCommandPlan(
+            id: "echo",
+            title: "输出测试",
+            displayCommand: "printf workspace-ok",
+            executable: "/bin/zsh",
+            arguments: ["-lc", "printf workspace-ok"],
+            explanation: "测试受控命令执行。"
+        )
+        let echoResult = ProjectWorkspaceService.run(command: echoCommand, rootURL: root, timeout: 10)
+        XCTAssertTrue(echoResult.passed, echoResult.stderr)
+        XCTAssertTrue(echoResult.stdout.contains("workspace-ok"))
+#endif
+    }
+
     func testMarkdownContainsCompletionAndDeliverables() {
         let project = ProjectCatalog.projects[0]
         let progress = project.milestones.map {

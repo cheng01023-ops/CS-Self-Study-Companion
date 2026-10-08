@@ -19,10 +19,16 @@ struct AppDestinationView: View {
             ConceptDetailView(conceptID: id)
         case let .project(id):
             ProjectDetailView(projectID: id)
+        case let .projectWorkspace(id):
+            ProjectWorkspaceView(projectID: id)
         case let .lab(id):
             InteractiveLabView(labID: id)
         case let .tutorialLab(tutorialID):
             TutorialLabSessionView(tutorialID: tutorialID)
+        case .adaptivePath:
+            AdaptivePathView()
+        case .practiceStudio:
+            PracticeStudioView()
         case .codeReading:
             CodeReadingCenterView()
         case .portfolio:

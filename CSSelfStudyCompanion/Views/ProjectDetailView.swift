@@ -32,6 +32,7 @@ struct ProjectDetailView: View {
                         engineeringPath(project)
                         prerequisites(project)
                         repositoryMap(project)
+                        workspaceCard(project)
                         milestones(project)
                         qualityGates(project)
                         openSourceReading(project)
@@ -198,6 +199,52 @@ struct ProjectDetailView: View {
                 .lineSpacing(3)
         }
         .learningCard()
+    }
+
+    private func workspaceCard(_ project: LearningProject) -> some View {
+        let color = Color(hex: project.themeHex)
+        return VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
+                Image(systemName: "checkmark.shield.fill")
+                    .font(.title2)
+                    .foregroundStyle(.white)
+                    .frame(width: 44, height: 44)
+                    .background(color.gradient, in: RoundedRectangle(cornerRadius: 12))
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("工程验收工作台")
+                        .font(.title3.bold())
+                    Text("选择本地项目目录，检查仓库地图、README、测试入口、Git 状态，并在 Mac 上运行构建与测试命令。")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .lineSpacing(3)
+                }
+                Spacer()
+            }
+
+            HStack {
+                StatPill(icon: "folder", text: "静态扫描", tint: .indigo)
+                StatPill(icon: "hammer", text: "构建验证", tint: .orange)
+                StatPill(
+                    icon: hasWorkspaceReport(project) ? "checkmark.seal.fill" : "doc.text",
+                    text: hasWorkspaceReport(project) ? "已有报告" : "验收报告",
+                    tint: .green
+                )
+            }
+
+            NavigationLink(value: AppRoute.projectWorkspace(project.id)) {
+                Label("打开工程验收工作台", systemImage: "arrow.right.circle.fill")
+                    .font(.subheadline.weight(.bold))
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(color)
+            .accessibilityIdentifier("project-workspace-link")
+        }
+        .learningCard()
+    }
+
+    private func hasWorkspaceReport(_ project: LearningProject) -> Bool {
+        notes.contains { $0.targetID == "project:\(project.id):verification" }
     }
 
     private func milestones(_ project: LearningProject) -> some View {

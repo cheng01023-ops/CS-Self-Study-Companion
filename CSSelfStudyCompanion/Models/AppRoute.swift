@@ -8,8 +8,11 @@ enum AppRoute: Hashable {
     case exercise(String)
     case concept(String)
     case project(String)
+    case projectWorkspace(String)
     case lab(String)
     case tutorialLab(String)
+    case adaptivePath
+    case practiceStudio
     case codeReading
     case portfolio
     case performance

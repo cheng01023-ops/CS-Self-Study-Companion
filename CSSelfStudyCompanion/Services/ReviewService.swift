@@ -92,6 +92,42 @@ enum ReviewService {
         try? context.save()
     }
 
+    static func scheduleConceptPractice(
+        conceptID: String,
+        title: String,
+        question: String,
+        referenceAnswer: String,
+        needsReview: Bool,
+        in context: ModelContext
+    ) {
+        let sourceID = "practice:\(conceptID)"
+        if let existing = item(forSourceID: sourceID, in: context) {
+            existing.title = title
+            existing.question = question
+            existing.referenceAnswer = referenceAnswer
+            if needsReview {
+                existing.isArchived = false
+                resetSchedule(existing, dueImmediately: true)
+            } else {
+                review(existing, remembered: true, schedulesNotification: false, in: context)
+            }
+        } else {
+            context.insert(
+                ReviewItem(
+                    id: "review:\(sourceID)",
+                    sourceType: "practice",
+                    sourceID: sourceID,
+                    title: title,
+                    question: question,
+                    referenceAnswer: referenceAnswer,
+                    explanation: "动态练习中的概念题。答错后会立即回到复习中心，答对后进入正常间隔训练。",
+                    dueAt: needsReview ? .now : dateAdding(days: intervals[0])
+                )
+            )
+        }
+        try? context.save()
+    }
+
     static func addOpenSourceReading(
         missionID: String,
         title: String,

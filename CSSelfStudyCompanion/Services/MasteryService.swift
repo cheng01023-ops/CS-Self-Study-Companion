@@ -65,6 +65,31 @@ enum MasteryService {
         )
     }
 
+    static func recordConceptPractice(
+        conceptID: String,
+        positive: Bool,
+        reason: String,
+        in context: ModelContext
+    ) {
+        let record = record(for: conceptID, in: context) ?? {
+            let newRecord = MasteryRecord(conceptID: conceptID)
+            context.insert(newRecord)
+            return newRecord
+        }()
+
+        let delta = positive ? 0.12 : -0.18
+        record.score = min(1, max(0, record.score + delta))
+        record.attempts += 1
+        if positive {
+            record.correctCount += 1
+        } else {
+            record.wrongCount += 1
+        }
+        record.lastReason = reason
+        record.lastPracticedAt = .now
+        try? context.save()
+    }
+
     static func recordText(
         _ text: String,
         positive: Bool,

@@ -5,6 +5,7 @@ struct ConceptDetailView: View {
     @Query(sort: \Concept.name) private var concepts: [Concept]
     @Query(sort: \Tutorial.order) private var tutorials: [Tutorial]
     @Query(sort: \MasteryRecord.score) private var masteryRecords: [MasteryRecord]
+    @Query private var progressRecords: [Progress]
 
     let conceptID: String
 
@@ -78,38 +79,59 @@ struct ConceptDetailView: View {
         }
     }
 
-    @ViewBuilder
     private func masteryCard(_ concept: Concept) -> some View {
         let record = masteryRecords.first { $0.conceptID == concept.id }
+        let completedTutorialIDs = Set(
+            tutorials
+                .filter { tutorial in
+                    progressRecords.contains {
+                        $0.itemID == .tutorialProgressID(tutorial.id) && $0.isCompleted
+                    }
+                }
+                .map(\.id)
+        )
+        let tutorialMap = Dictionary(uniqueKeysWithValues: tutorials.map { ($0.id, $0) })
+        let score = AdaptiveLearningService.inferredConceptScore(
+            concept,
+            mastery: record,
+            tutorialMap: tutorialMap,
+            completedTutorialIDs: completedTutorialIDs
+        )
+        let hasPractice = (record?.attempts ?? 0) > 0
+        let evidence = hasPractice ? "练习与复习记录" : "由相关教程完成度推断"
+        let color: Color = score >= 0.72 ? .green : score >= 0.55 ? .orange : .red
 
-        if let record, record.attempts > 0 {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    Label("我的掌握度", systemImage: "brain.head.profile")
-                        .font(.headline)
-                    Spacer()
-                    Text("\(Int(record.score * 100))%")
-                        .font(.headline.monospacedDigit())
-                        .foregroundStyle(record.score >= 0.72 ? .green : .orange)
-                }
-                LearningProgressBar(
-                    value: record.score,
-                    tint: record.score >= 0.72 ? .green : .orange
-                )
-                HStack {
-                    Text(MasteryService.masteryLabel(record.score))
-                    Spacer()
-                    Text("正确 \(record.correctCount) · 需复习 \(record.wrongCount)")
-                }
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                Text("最近依据：\(record.lastReason)")
+        return VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Label("当前就绪度", systemImage: "point.3.connected.trianglepath.dotted")
+                    .font(.headline)
+                Spacer()
+                Text("\(Int(score * 100))%")
+                    .font(.headline.monospacedDigit())
+                    .foregroundStyle(color)
+            }
+            LearningProgressBar(value: score, tint: color)
+            HStack {
+                Text(MasteryService.masteryLabel(score))
+                Spacer()
+                Text(evidence)
+            }
+            .font(.caption)
+            .foregroundStyle(.secondary)
+
+            if let record, record.attempts > 0 {
+                Text("正确 \(record.correctCount) · 需复习 \(record.wrongCount) · \(record.lastReason)")
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+            } else {
+                Text("完成相关教程、练习或复习后，系统会用真实掌握数据替代推断值。")
                     .font(.caption)
                     .foregroundStyle(.tertiary)
             }
-            .learningCard()
         }
+        .learningCard()
     }
+
 
     private func relatedTutorials(_ concept: Concept) -> some View {
         let related = tutorials.filter { concept.relatedTutorialIDs.contains($0.id) }

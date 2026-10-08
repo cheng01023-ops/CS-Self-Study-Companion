@@ -12,6 +12,18 @@ final class SystemIntegrationServiceTests: XCTestCase {
             .project("mini-shell")
         )
         XCTAssertEqual(
+            SystemIntegrationService.route(for: URL(string: "csxuexi://project-workspace/mini-shell")!),
+            .projectWorkspace("mini-shell")
+        )
+        XCTAssertEqual(
+            SystemIntegrationService.route(for: URL(string: "csxuexi://adaptive-path")!),
+            .adaptivePath
+        )
+        XCTAssertEqual(
+            SystemIntegrationService.route(for: URL(string: "csxuexi://practice-studio")!),
+            .practiceStudio
+        )
+        XCTAssertEqual(
             SystemIntegrationService.route(for: URL(string: "csxuexi://code-reading")!),
             .codeReading
         )

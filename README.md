@@ -17,6 +17,9 @@
 - 代码阅读、错误定位和输出预测训练
 - 项目制课程、互动实验室、逻辑/自动机/概率/复杂度实验室和项目作品集
 - 全局搜索、命令速查和 Linux 命令参考
+- 知识依赖图谱驱动的自适应学习路线，自动识别可开始、建议复习和需要补桥的内容
+- 工程验收工作台，支持目录扫描、结构检查、构建命令运行和 Markdown 报告
+- 动态练习、薄弱概念优先、掌握度热力图和间隔训练回流
 - 进度、掌握度、每日计划和提醒
 - Mac ↔ iPhone 记录级增量同步
 - JSON/AES-GCM 数据备份、课程包导入导出和更新历史
@@ -90,9 +93,9 @@ scripts/                         构建、测试、安装和发布脚本
 
 ## 开发状态
 
-- macOS 自动化测试：55 个通过
-- iOS 单元测试：52 个通过
-- iOS UI 测试：6 个通过
+- macOS 自动化测试：59 个通过
+- iOS 单元测试：56 个通过
+- iOS UI 测试：8 个通过
 
 详细内容见 [`docs/USER-GUIDE.md`](docs/USER-GUIDE.md)、[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) 和 [`docs/TEST-REPORT.md`](docs/TEST-REPORT.md)。
 
